@@ -7,3 +7,11 @@
  ```alias
    npm install
 ```
+3. Запустить json-server
+ ```alias
+   json-server --watch db.json
+```
+4. Запустить сборку gulp
+ ```alias
+   gulp
+```
