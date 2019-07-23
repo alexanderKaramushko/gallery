@@ -23,6 +23,7 @@
     "gulp-cheerio": "^0.6.3",
     "gulp-cssmin": "^0.2.0",
     "gulp-debug": "^4.0.0",
+    "gulp-if": "^3.0.0",
     "gulp-imagemin": "^5.0.3",
     "gulp-include": "^2.4.1",
     "gulp-load-plugins": "^1.5.0",
@@ -43,8 +44,6 @@
     "uncss": "^0.16.2"
   },
   "dependencies": {
-    "es6-promise": "^4.2.8",
-    "jquery": "^3.4.1",
     "object-fit-images": "^3.2.4",
     "promise-polyfill": "8.1.3"
   }

@@ -1,24 +1,26 @@
+// Функции
 
 // Функция получения данных с сервера
-function get(url, type) { 
-    return new Promise((succeed, fail) => {
+function get(url) { 
+    return new Promise((resolve, reject) => {
         let request = new XMLHttpRequest();
 
         request.open('GET', url, true);
-        request.responseType = type;
+        // request.responseType = type;
         request.send();
     
         request.addEventListener('load', () => {
             if (request.status != 200) {
-                fail();
+                reject();
             } else {
-                succeed(request.response);
+                // Второй аргумент нужен для проверки типа приходящих данных, чтобы понять парсить ли нам JSON или просто вставлять src до картинки
+                resolve({response: request.response, header: request.getAllResponseHeaders('Content-Type')});
             }
         })
     })
 }
 
-// Функция для размещения данных на сервере
+// Функция размещения данных на сервер
 function post(url, body) {
     let postRequest = new XMLHttpRequest();
 
@@ -28,23 +30,24 @@ function post(url, body) {
 }
 
 // Функция отрисовки новых изображений
-function createImg(responseUrl) {
-    let img = document.createElement('img');
-    let url = window.URL || window.webkitURL;
-    img.classList.add('gallery__img');
-    img.src = url.createObjectURL(responseUrl);
-    document.querySelector('.gallery__list').append(img);
+function createImg({url, width, height}) {
+    let img = new Image();
+    img.src = url;
 
-    objectFitImages();
+    // Рассчитываем новые пропорции согласно нашей фиксированный высоте в 200px
+    let calcNewWidth = width/(height/200);
+    img.style.width = `${calcNewWidth}px`;
+
+    img.classList.add('gallery__img');
+
+    document.querySelector('.gallery__list').append(img);
 }
 
-// Функция загрузки изображений после перезагрузки окна браузера
-function udpateAfterReload() {
-    get('http://localhost:3000/images', 'application/json').then(result => {
-        JSON.parse(result).forEach(e => {
-            get(e.url, 'blob').then(responseURL => {
-                createImg(responseURL); 
-            })
-        });
+// Функция обновления галереи при перезагрузке окна браузера
+function updateImgList() {
+    get('http://localhost:3000/galleryImages', 'application/json').then(({response}) => {
+        JSON.parse(response).forEach(e => {
+            createImg(e); 
+        })
     })
 }

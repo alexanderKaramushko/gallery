@@ -14,23 +14,24 @@
   <body>
     <div class="gallery">
       <h1 class="gallery__title">Gallery example:</h1>
-      <div class="gallery__functional">
-        <form action="" class="gallery__form">
-            <div class="gallery__input-group">
-                <input type="text" name="url-address" placeholder="Type URL" id="url-input" class="gallery__url">
-                <label for="url-input" class="gallery__label">Type URL</label>
-                <input type="submit" value="Load new image" class="gallery__add">
-            </div>
-        </form>
+
+      <div action="" class="load-form gallery__form">
+        <div class="load-form__input-group">
+            <input type="text" name="url-address" placeholder="Type URL" id="url-input" class="load-form__input">
+            <label for="url-input" class="load-form__label">Type URL</label>
+            <input type="submit" value="Load new image" id="load-img-by-url" class="load-form__btn">
+        </div>
         <br>
         <span>или</span>
         <br>
-        <input type="file" name="" id="" class="gallery__load">
+        <br>
+        <input type="file" name="" id="load-img-by-json" class="gallery__load">
       </div>
+
       <div class="gallery__list"></div>
     </div>
   </body>
 
   <script src="js/script.min.js"></script>
-  
+
 </html>

@@ -77,7 +77,7 @@ gulp.task(
     "build:scss",
     "build:js",
     "build:assets",
-    "build:svg"
+    // "build:svg"
   )
 );
 

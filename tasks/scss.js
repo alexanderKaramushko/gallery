@@ -6,9 +6,10 @@ const multipipe = require("multipipe");
 const autoprefixer = require("autoprefixer");
 const uncss = require("postcss-uncss");
 const browserSync = require("browser-sync").create();
+const isProd = !process.env.NODE_ENV || process.env.NODE_ENV == 'prod';
 
 var plugins = [
-  autoprefixer({ browsers: ["last 2 version"] })
+  autoprefixer({ browsers: ["last 2 version"] }),
   // uncss({
   //   html: "dest/index.html"
   // })
@@ -22,8 +23,8 @@ module.exports = function(options) {
       $.debug({ title: "scss" }),
       $.sass(),
       $.postcss(plugins),
-      $.cssmin(),
-      $.rename({ suffix: ".min" }),
+      $.if(isProd, $.cssmin()),
+      $.if(isProd, $.rename({ suffix: ".min" })),
       gulp.dest(options.dst),
       browserSync.stream()
     ).on(

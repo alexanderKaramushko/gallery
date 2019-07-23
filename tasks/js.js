@@ -4,6 +4,7 @@ const $ = require("gulp-load-plugins")();
 const gulp = require("gulp");
 const multipipe = require("multipipe");
 const browserSync = require("browser-sync").create();
+const isProd = !process.env.NODE_ENV || process.env.NODE_ENV == 'prod';
 
 module.exports = function(options) {
   return function() {
@@ -18,8 +19,8 @@ module.exports = function(options) {
       $.babel({
         presets: ["@babel/env"]
       }),
-      $.uglify(),
-      $.rename({ suffix: ".min" }),
+      $.if(isProd, $.uglify()),
+      $.if(isProd, $.rename({ suffix: ".min" })),
       gulp.dest(options.dst),
       browserSync.stream()
     ).on(

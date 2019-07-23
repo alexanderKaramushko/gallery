@@ -1,8 +1,5 @@
 @import "_variables.scss";
 @import "_mixins.scss";
-// @import "_functions.scss";
-// @import "_extends.scss";
-// @import "_sprites.scss";
 @import "fonts.scss";
 
 body {
@@ -10,7 +7,6 @@ body {
 }
 
 .gallery {
-    margin: 0 auto;
     max-width: $max_width_limiter;
     min-width: $min_width_limiter;
 
@@ -19,17 +15,36 @@ body {
         font-size: $gallery_title_font_size;
     }
 
-    &__functional {
-        padding: $functional_padding;
-        margin-bottom: $functional_margin_bottom;
-        border: 1px solid #000;
-    }
-
     &__list {
         margin: -$img_margin;
         display: flex;
-        flex-flow: row wrap; 
+        flex-flow: row wrap;
     }
+
+    &__img {
+        margin: $img_margin;
+        height: $img_height;
+        flex: 1 1 auto;
+        max-width: 50%;
+        object-fit: cover;
+
+        // Полифилл для IE 11 и меньше
+        font-family: 'object-fit: cover';
+
+        @include mq('tablet') {
+            max-width: 100%;
+        }
+
+        @include mq('phone') {
+            max-width: 98%;
+        }
+    }
+}
+
+.load-form {
+    padding: $functional_padding;
+    margin-bottom: $functional_margin_bottom;
+    border: 1px solid #000;
 
     &__input-group {
         padding-top: $input_group_top;
@@ -38,13 +53,13 @@ body {
         flex-flow: row wrap;
     }
 
-    &__url {
+    &__input {
         padding: $url_input_padding;
         outline: none;
         border: 1px solid;
         transition: all 0.5 ease-in;
 
-        &:placeholder-shown + .gallery__label {
+        &:placeholder-shown + .load-form__label {
             opacity: 0;
             transform: translateY(1rem);
         }
@@ -65,7 +80,7 @@ body {
         transition: all 0.2s ease-out;
     }
 
-    &__add {
+    &__btn {
         margin-left: $add_url_margin_left;
 
         @include mq('phone') {
@@ -76,26 +91,4 @@ body {
     &__load {
         margin-top:$load_url_margin_top;
     }
-
-    &__img {
-        margin: $img_margin;
-        display: block;
-        height: $img_height;
-        flex: 1 1 auto;
-        max-width: 50%;
-        object-fit: cover;
-
-        // Полифилл для IE 11 и меньше
-        font-family: 'object-fit: cover';
-
-        @include mq('tablet') {
-            max-width: 100%;
-        }
-
-        @include mq('phone') {
-            max-width: 98%;
-        }
-    }
 }
-
-
