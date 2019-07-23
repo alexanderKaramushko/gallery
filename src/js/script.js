@@ -43,15 +43,19 @@ document.querySelector('.gallery__load').onchange = e => {
         let reader = new FileReader();
 
         reader.onload = function (e) {
-            let parsedObj = JSON.parse(e.target.result); 
+            // !
+            let parsedObj = JSON.parse(e.target.result);
+            let imgIndex = Object.keys(parsedObj)[0];
+            let imgArr = parsedObj[imgIndex];
+
+            var i = 0;
     
-            for (var i = 0; i < parsedObj.images.length; i++) {
-                post('http://localhost:3000/images', JSON.stringify(parsedObj.images[i]));
-    
-                if (i == parsedObj.images.length - 1) {
-                    // document.location.reload();
-                }
+            while (i < imgArr.length) {
+                post('http://localhost:3000/images', JSON.stringify(imgArr[i]));
+                i++;
             }
+
+            document.location.reload();
         }
     
         reader.readAsText(file);
